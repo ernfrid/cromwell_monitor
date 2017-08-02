@@ -7,7 +7,7 @@ function note_stats {
     local memtotal=$(awk '/MemTotal/ {print $2 / 1024}' /proc/meminfo)
     local memfree=$(awk '/MemFree/ {print $2 / 1024}' /proc/meminfo)
     local memavailable=$(awk '/MemAvailable/ {print $2 / 1024}' /proc/meminfo)
-    echo -e "{ 'Timestamp': ${dt}, 'MemTotal': ${memtotal}, 'MemFree': ${memfree}, 'MemAvail': ${memavailable} }"
+    echo -e "{ \"Timestamp\": \"${dt}\", \"MemTotal\": ${memtotal}, \"MemFree\": ${memfree}, \"MemAvail\": ${memavailable} }"
 }
 
 while true; do 
