@@ -2,6 +2,9 @@
 
 set -ueo pipefail
 
+# Read memory stats for the machine from /proc/meminfo and convert from kB to mB.
+# Output a json object per timestamp
+
 function note_stats {
     local dt=$(date +'%Y-%m-%d %T')
     local memtotal=$(awk '/MemTotal/ {print $2 / 1024}' /proc/meminfo)
