@@ -15,5 +15,5 @@ function note_stats {
 
 while true; do 
     note_stats
-    sleep 5 
+    sleep 60 
 done
