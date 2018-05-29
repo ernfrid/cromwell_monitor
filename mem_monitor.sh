@@ -10,10 +10,11 @@ function note_stats {
     local memtotal=$(awk '/MemTotal/ {print $2 / 1024}' /proc/meminfo)
     local memfree=$(awk '/MemFree/ {print $2 / 1024}' /proc/meminfo)
     local memavailable=$(awk '/MemAvailable/ {print $2 / 1024}' /proc/meminfo)
-    echo -e "${dt}\t${memtotal}\t${memfree}\t${memavailable}"
+    local memused=$( awk '{ print $1 - $2 }' <<< "${memtotal} ${memfree}" )
+    echo -e "${dt}\t${memtotal}\t${memfree}\t${memavailable}\t${memused}"
 }
 
-echo -e "#Timestamp\tMemTotal\tMemFree\tMemAvail"
+echo -e "#Timestamp\tMemTotal\tMemFree\tMemAvail\tMemUsed"
 while true; do
     note_stats
     sleep 60 
