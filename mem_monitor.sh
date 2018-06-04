@@ -7,10 +7,11 @@ set -ueo pipefail
 
 function note_stats {
     local dt=$(date +'%Y-%m-%d %T')
-    local memtotal=$(awk '/MemTotal/ {print $2 / 1024}' /proc/meminfo)
-    local memfree=$(awk '/MemFree/ {print $2 / 1024}' /proc/meminfo)
-    local memavailable=$(awk '/MemAvailable/ {print $2 / 1024}' /proc/meminfo)
-    local memused=$( awk '{ print $1 - $2 }' <<< "${memtotal} ${memfree}" )
+    local stats=$(cat /proc/meminfo)
+    local memtotal=$(awk '/MemTotal/ {print $2 / 1024}' <<< "$stats")
+    local memfree=$(awk '/MemFree/ {print $2 / 1024}' <<< "$stats")
+    local memavailable=$(awk '/MemAvailable/ {print $2 / 1024}' <<< "$stats")
+    local memused=$( awk '{ print $1 - $2 }' <<< "${memtotal} ${memavailable}" )
     echo -e "${dt}\t${memtotal}\t${memfree}\t${memavailable}\t${memused}"
 }
 
